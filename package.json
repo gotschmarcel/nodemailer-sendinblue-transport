@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-sendinblue-transport",
-  "version": "1.2.3",
+  "version": "1.3.3",
   "description": "Nodemailer Transport Module for Sendinblue",
   "main": "lib/nodemailer-sendinblue-transport.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "nodemailer",
     "sendinblue"
   ],
-  "author": "Marcel Gotsch",
+  "author": "Marcel Gotsch, SAMI BETTAYEB <sami3639@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gotschmarcel/nodemailer-sendinblue-transport/issues"
@@ -25,7 +25,8 @@
     "jscs": "^2.11.0",
     "jshint": "^2.9.1",
     "mocha": "^3.2.0",
-    "nodemailer": "^2.6.4"
+    "nodemailer": "^2.6.4",
+    "rewiremock": "^3.14.3"
   },
   "dependencies": {
     "addressparser": "^1.0.1",
