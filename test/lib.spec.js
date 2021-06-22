@@ -2,6 +2,8 @@ var assert = require("assert");
 var fs = require("fs");
 var nodemailer = require("nodemailer");
 var sendinblue = require("../lib/nodemailer-sendinblue-transport");
+var rewiremock = require("rewiremock/node");
+var stream = require('stream')
 
 
 function MockTransport(sb) {
@@ -124,6 +126,30 @@ describe("SendinBlueTransport", function () {
                 }]
             }, function (err, body) {
                 assert.deepStrictEqual(body.attachment, ["http://domain.do/file.suffix"]);
+                done();
+            });
+        });
+
+        it("should handle url with a filename attachements", function (done) {
+            const http = rewiremock.proxy('http', {});
+            async function * generate() {
+                yield Buffer.from('some');
+                yield Buffer('attachment');
+                yield Buffer('string');
+            }
+            http.get = function(url, callback){
+                const response = stream.Readable.from(generate())
+                callback(response)
+                return Promise.resolve(response)
+            }
+            transport.sendMail({
+                attachments: [{
+                    href: "http://domain.do/file.suffix",
+                    filename: 'test'
+                }]
+            }, function (err, body) {
+                if(err) console.error(err)
+                assert.deepStrictEqual(body.attachment, { test: Buffer.from('someattachmentstring').toString("base64") });
                 done();
             });
         });
